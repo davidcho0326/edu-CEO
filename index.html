@@ -1394,6 +1394,51 @@
           </div>
         </div>
 
+        <!-- Card 5: 필수 단축키 (Card 4 옆에 배치) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon orange">&#9000;</div>
+            <div>
+              <div class="card-title">필수 단축키</div>
+              <div class="card-subtitle">이것만 알면 충분합니다</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="shortcut-grid">
+              <div class="shortcut-item"><span class="shortcut-key">Shift+Tab</span><span class="shortcut-desc">모드 전환</span></div>
+              <div class="shortcut-item"><span class="shortcut-key">Esc</span><span class="shortcut-desc">되돌리기</span></div>
+              <div class="shortcut-item"><span class="shortcut-key">Ctrl+C</span><span class="shortcut-desc">중단</span></div>
+              <div class="shortcut-item"><span class="shortcut-key">@</span><span class="shortcut-desc">파일 참조</span></div>
+              <div class="shortcut-item"><span class="shortcut-key">/clear</span><span class="shortcut-desc">새 대화</span></div>
+              <div class="shortcut-item"><span class="shortcut-key">/compact</span><span class="shortcut-desc">대화 압축</span></div>
+              <div class="shortcut-item"><span class="shortcut-key">/resume</span><span class="shortcut-desc">이전 세션 이어가기</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: 네 가지 작업 모드 (Card 4 옆에 배치) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon red">&#9881;</div>
+            <div>
+              <div class="card-title">네 가지 작업 모드</div>
+              <div class="card-subtitle">Shift+Tab으로 순환 전환</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <table class="compare-table">
+              <tr><th>모드</th><th>비유</th><th>설명</th></tr>
+              <tr><td><strong>일반</strong></td><td>수동 기어</td><td>모든 작업 전 확인</td></tr>
+              <tr><td><strong>자동 승인</strong></td><td>자동 기어</td><td>파일 편집 자동, Bash는 확인</td></tr>
+              <tr><td><strong>계획</strong></td><td>네비게이션</td><td>계획만 세움 (실행 X)</td></tr>
+              <tr><td><strong style="color:var(--accent);">Bypass</strong></td><td style="color:var(--accent);">위험 운전</td><td>전부 자동 (격리 환경만!)</td></tr>
+            </table>
+            <p style="margin-top:10px; font-size:11px; color:var(--text-light);">
+              &darr; 자동 승인 vs Bypass의 차이는 <strong>아래 권한 비교 블록</strong>에서 깊게 다룹니다
+            </p>
+          </div>
+        </div>
+
         <!-- ==========================================================
              PERMISSION MODES BLOCK — 자동 승인 vs Bypass 3단계 비교
              ========================================================== -->
@@ -1523,44 +1568,6 @@
           </div>
         </div>
         <!-- /PERMISSION MODES BLOCK -->
-
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon orange">&#9000;</div>
-            <div>
-              <div class="card-title">필수 단축키</div>
-              <div class="card-subtitle">이것만 알면 충분합니다</div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="shortcut-grid">
-              <div class="shortcut-item"><span class="shortcut-key">Shift+Tab</span><span class="shortcut-desc">모드 전환</span></div>
-              <div class="shortcut-item"><span class="shortcut-key">Esc</span><span class="shortcut-desc">되돌리기</span></div>
-              <div class="shortcut-item"><span class="shortcut-key">Ctrl+C</span><span class="shortcut-desc">중단</span></div>
-              <div class="shortcut-item"><span class="shortcut-key">@</span><span class="shortcut-desc">파일 참조</span></div>
-              <div class="shortcut-item"><span class="shortcut-key">/clear</span><span class="shortcut-desc">새 대화</span></div>
-              <div class="shortcut-item"><span class="shortcut-key">/compact</span><span class="shortcut-desc">대화 압축</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon red">&#9881;</div>
-            <div>
-              <div class="card-title">세 가지 작업 모드</div>
-              <div class="card-subtitle">Shift+Tab으로 전환</div>
-            </div>
-          </div>
-          <div class="card-body">
-            <table class="compare-table">
-              <tr><th>모드</th><th>비유</th><th>설명</th></tr>
-              <tr><td><strong>일반</strong></td><td>수동 기어</td><td>모든 작업 전 확인</td></tr>
-              <tr><td><strong>자동 승인</strong></td><td>자동 기어</td><td>대부분 알아서 처리</td></tr>
-              <tr><td><strong>계획</strong></td><td>네비게이션</td><td>계획만 세움 (실행X)</td></tr>
-            </table>
-          </div>
-        </div>
 
       </div>
     </div>
