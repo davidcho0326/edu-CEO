@@ -1062,11 +1062,141 @@
             <table class="compare-table">
               <tr><th>명령어</th><th>수준</th></tr>
               <tr><td><code>claude</code></td><td style="color:var(--success);font-weight:700;">초보자 추천</td></tr>
-              <tr><td><code>claude --permission-mode auto</code></td><td>익숙해진 후</td></tr>
+              <tr><td><code>claude --permission-mode acceptEdits</code></td><td>익숙해진 후</td></tr>
               <tr><td><code>claude --dangerously-skip-permissions</code></td><td style="color:var(--accent);">고급자만</td></tr>
             </table>
           </div>
         </div>
+
+        <!-- ==========================================================
+             PERMISSION MODES BLOCK — 자동 승인 vs Bypass 3단계 비교
+             ========================================================== -->
+        <div class="ide-layout-wrapper">
+          <div class="ide-title">
+            &#9881; 자동 승인 모드 vs Bypass 모드
+            <span class="pill">권한 3단계 비교</span>
+          </div>
+          <div class="ide-subtitle">
+            Card 4의 모드들, 사실은 가운데에 <strong>"실용적인 중간 단계"</strong>가 하나 더 있습니다.
+            단순히 "자동/수동" 이분법이 아니라 <strong>3단계 그라디언트</strong>로 이해해야 합니다.
+          </div>
+
+          <!-- ===== Main 3-column comparison table ===== -->
+          <div style="overflow-x:auto; margin-top:8px;">
+            <table class="compare-table" style="min-width:760px;">
+              <tr>
+                <th style="width:140px;">항목</th>
+                <th style="background:#fff8e1; color:#b45309;">&#128993; 자동 승인 (기본)</th>
+                <th style="background:#fff4e6; color:#c2410c;">&#128992; 자동 승인 + 화이트리스트 &#11088;</th>
+                <th style="background:#fff5f5; color:#b91c1c;">&#128308; Bypass</th>
+              </tr>
+              <tr>
+                <td><strong>시작 명령어</strong></td>
+                <td><code>claude --permission-mode acceptEdits</code></td>
+                <td style="font-size:12px;"><code>claude --permission-mode acceptEdits --allowedTools "Bash(*)" "WebFetch"</code></td>
+                <td><code>claude --dangerously-skip-permissions</code></td>
+              </tr>
+              <tr>
+                <td><strong>세션 중 추가</strong></td>
+                <td><code>Shift+Tab</code> 1번</td>
+                <td><code>/permissions add Bash(npm:*)</code></td>
+                <td><code>Shift+Tab</code> 사이클 끝까지</td>
+              </tr>
+              <tr>
+                <td><strong>영구 설정</strong></td>
+                <td style="color:var(--text-light);">—</td>
+                <td><code>.claude/settings.local.json</code> 의 <code>permissions.allow</code></td>
+                <td style="color:var(--text-light);">—</td>
+              </tr>
+              <tr>
+                <td><strong>파일 편집 (Edit/Write)</strong></td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 자동</td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 자동</td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 자동</td>
+              </tr>
+              <tr>
+                <td><strong>Bash 명령어</strong></td>
+                <td>&#10067; 매번 확인</td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 화이트리스트만 자동</td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 전부 자동</td>
+              </tr>
+              <tr>
+                <td><strong>MCP 도구 호출</strong></td>
+                <td>&#10067; 매번 확인</td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 화이트리스트만 자동</td>
+                <td style="color:var(--success); font-weight:700;">&#10003; 전부 자동</td>
+              </tr>
+              <tr>
+                <td><strong>위험한 명령 (<code>rm -rf</code>)</strong></td>
+                <td style="color:var(--accent);">&#128683; 차단</td>
+                <td style="color:var(--accent);">&#128683; 화이트리스트 밖이면 차단</td>
+                <td style="color:#b91c1c; font-weight:700;">&#9888; 자동 실행</td>
+              </tr>
+              <tr>
+                <td><strong>위험도</strong></td>
+                <td>&#128993; 낮음~중간</td>
+                <td>&#128992; 중간 (제어됨)</td>
+                <td>&#128308; 높음</td>
+              </tr>
+              <tr>
+                <td><strong>추천 환경</strong></td>
+                <td>코드 반복 수정</td>
+                <td style="font-weight:700; color:var(--accent);">일상 작업 (가장 추천)</td>
+                <td>격리 컨테이너만</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- ===== Whitelist patterns sub-table ===== -->
+          <div style="font-size:14px; font-weight:700; color:var(--primary); margin:24px 0 10px;">
+            &#127919; 화이트리스트 패턴 예시 (가운데 칸 심화)
+          </div>
+          <p style="font-size:13px; color:var(--text-light); margin-bottom:10px;">
+            <code>--allowedTools</code> 플래그나 <code>/permissions add</code> 명령에 다음과 같은 패턴을 줄 수 있습니다.
+          </p>
+          <table class="compare-table">
+            <tr><th>패턴</th><th>의미</th></tr>
+            <tr><td><code>Bash(*)</code></td><td>모든 Bash 명령어 자동 승인</td></tr>
+            <tr><td><code>Bash(npm:*)</code></td><td><code>npm install</code>, <code>npm run build</code> 등 <strong>npm 명령만</strong> 자동</td></tr>
+            <tr><td><code>Bash(git:status)</code></td><td>정확히 <code>git status</code> 만 자동 (다른 git 명령은 확인)</td></tr>
+            <tr><td><code>Bash(git:*)</code></td><td>모든 git 명령어 자동</td></tr>
+            <tr><td><code>WebFetch(domain:github.com)</code></td><td>github.com 도메인 fetch만 자동</td></tr>
+            <tr><td><code>Edit</code>, <code>Write</code>, <code>Read</code></td><td>편집/쓰기/읽기 도구 전체 자동</td></tr>
+          </table>
+
+          <!-- ===== JSON config example ===== -->
+          <div style="font-size:14px; font-weight:700; color:var(--primary); margin:24px 0 10px;">
+            &#128190; 영구 설정 예시 &mdash; <code>.claude/settings.local.json</code>
+          </div>
+          <p style="font-size:13px; color:var(--text-light); margin-bottom:10px;">
+            이렇게 저장해두면 매번 플래그를 안 적어도 프로젝트 폴더에서 <code>claude</code> 만 입력하면 자동 적용됩니다.
+          </p>
+          <div class="code-block" style="white-space:pre;">{
+  <span class="key">"permissions"</span>: {
+    <span class="key">"allow"</span>: [
+      <span class="str">"Bash(npm:*)"</span>,
+      <span class="str">"Bash(git:status)"</span>,
+      <span class="str">"Bash(git:diff)"</span>,
+      <span class="str">"Edit"</span>,
+      <span class="str">"Write"</span>,
+      <span class="str">"WebFetch(domain:github.com)"</span>
+    ]
+  }
+}</div>
+
+          <!-- ===== Conclusion tip box ===== -->
+          <div class="tip-box" style="margin-top:18px;">
+            <div class="tip-title">&#128161; 한 줄 결론</div>
+            <p>
+              &#128993; <strong>자동 승인</strong> = 파일 편집만 자동<br>
+              &#128992; <strong>자동 승인 + 화이트리스트</strong> = 파일 편집 + 내가 허용한 도구만 자동 &nbsp;&larr;&nbsp; <strong style="color:#c2410c;">실전에서 가장 추천</strong><br>
+              &#128308; <strong>Bypass</strong> = 전부 자동 (위험!)<br><br>
+              <strong>가운데 옵션이 속도와 안전의 균형을 잡는 가장 실용적인 패턴</strong>입니다.
+              Bypass는 회사 메인 PC / Git 저장소 / 운영 서버에서는 <strong style="color:#b91c1c;">절대 사용 금지</strong>.
+            </p>
+          </div>
+        </div>
+        <!-- /PERMISSION MODES BLOCK -->
 
         <div class="card">
           <div class="card-header">
