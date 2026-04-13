@@ -2052,6 +2052,97 @@
           </div>
         </div>
       </div>
+
+      <!-- ==========================================================
+           권장 사용법: 폴더 경로 전달 (개별 파일 경로 X)
+           ========================================================== -->
+      <div style="margin-top:28px; background:#fff; border-radius:14px; padding:26px; border:2px solid var(--accent); box-shadow:0 4px 14px rgba(233,69,96,0.1);">
+        <div style="font-size:1.05rem; font-weight:800; color:var(--primary); margin-bottom:8px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          &#128193; 권장 사용법 &mdash; "이미지를 한 폴더에 모아두고 폴더 경로만 전달"
+          <span style="background:var(--accent); color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; letter-spacing:0.5px;">실전 팁</span>
+        </div>
+        <p style="font-size:13px; color:var(--text-light); margin-bottom:18px; line-height:1.7;">
+          Claude Code에 <strong>개별 파일 경로를 일일이 알려주는 대신</strong>, 모델 사진과 착장 사진을
+          <strong>한 폴더에 모은 뒤 폴더 경로만 전달</strong>하세요. Claude가 파일명과 이미지 내용을 보고
+          <strong>어떤 게 인물이고 어떤 게 제품인지 자동으로 판단</strong>합니다.
+        </p>
+
+        <!-- 폴더 구조 -->
+        <div style="font-weight:700; color:var(--primary); margin:14px 0 8px; font-size:13px;">
+          &#128194; 권장 폴더 구조
+        </div>
+        <div class="tree" style="margin:0 0 16px;"><span class="hl">c:/work/tryon-test/</span>     <span class="comment">&larr; 이 폴더 하나만 Claude에 전달</span>
+&#9500;&#9472;&#9472; <span class="leaf">model.jpg</span>      <span class="comment">&larr; 인물 사진 (Claude가 자동 감지)</span>
+&#9492;&#9472;&#9472; <span class="leaf">outfit.jpg</span>     <span class="comment">&larr; 착장/제품 사진 (Claude가 자동 감지)</span></div>
+
+        <!-- 명령 예시 -->
+        <div style="font-weight:700; color:var(--primary); margin:18px 0 8px; font-size:13px;">
+          &#9000; Claude Code에 전달할 명령 예시
+        </div>
+        <div class="code-block">
+          <span style="color:#74b9ff; font-weight:700;">user&gt;</span> <span class="str">@c:/work/tryon-test/</span> 이 폴더의 모델에게 제품을 입혀줘<br>
+          <span class="comment"># Claude가 폴더 스캔 → 모델/제품 자동 구분 → fnf-ai-studio MCP 호출</span><br>
+          <span class="comment"># 결과는 같은 폴더 또는 src/output/ 에 자동 저장</span>
+        </div>
+
+        <!-- 비교 표 -->
+        <div style="font-weight:700; color:var(--primary); margin:20px 0 8px; font-size:13px;">
+          &#9878; 기존 방식 vs 권장 방식
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="compare-table" style="min-width:560px;">
+            <tr>
+              <th style="width:130px;">항목</th>
+              <th style="background:#f8f9fa;">개별 파일 경로 전달</th>
+              <th style="background:#fff8e1;">&#128193; 폴더 경로 전달 (권장)</th>
+            </tr>
+            <tr>
+              <td><strong>입력 형태</strong></td>
+              <td style="font-size:12px;"><code>@model.jpg @outfit.jpg ...</code></td>
+              <td style="font-size:12px;"><code>@폴더경로/ 알아서 입혀줘</code></td>
+            </tr>
+            <tr>
+              <td><strong>파일명 기억</strong></td>
+              <td style="color:var(--accent);">&#10005; 정확한 파일명 외워야 함</td>
+              <td style="color:var(--success); font-weight:700;">&#10003; 외울 필요 없음</td>
+            </tr>
+            <tr>
+              <td><strong>여러 장 처리</strong></td>
+              <td style="color:var(--accent);">&#10005; 각각 명시 필요</td>
+              <td style="color:var(--success); font-weight:700;">&#10003; 폴더 안 전체 일괄</td>
+            </tr>
+            <tr>
+              <td><strong>역할 판단</strong></td>
+              <td style="color:var(--accent);">&#10005; 사람이 직접 분류</td>
+              <td style="color:var(--success); font-weight:700;">&#10003; Claude가 자동 추론</td>
+            </tr>
+            <tr>
+              <td><strong>오타 위험</strong></td>
+              <td style="color:var(--warning);">&#9888; 파일명 오타 가능</td>
+              <td style="color:var(--success); font-weight:700;">&#10003; 폴더 경로만 정확하면 OK</td>
+            </tr>
+            <tr>
+              <td><strong>확장성</strong></td>
+              <td>모델 1 + 제품 1 고정</td>
+              <td style="color:var(--success); font-weight:700;">모델 N + 제품 M 자유</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- 핵심 인사이트 -->
+        <div class="tip-box" style="margin-top:16px;">
+          <div class="tip-title">&#128161; 핵심 인사이트 &mdash; 명령형 vs 선언형</div>
+          <p>
+            <strong>개별 파일 경로 전달 = 명령형</strong> (사람이 모든 인자를 직접 지정)<br>
+            <strong>&#128193; 폴더 경로 전달 = 선언형</strong> (Claude에게 의도만 전달, 세부는 위임)<br><br>
+            Claude를 <strong>"사람 동료"로 대하는 핵심 패턴</strong>입니다.
+            동료에게 <code>"model.jpg를 1번 인자, outfit.jpg를 2번 인자에 넣어줘"</code> 라고는 안 하잖아요?
+            <code>"이 폴더 보고 알아서 해줘"</code> 라고 하지요. Claude Code도 정확히 그런 동료입니다.
+          </p>
+        </div>
+      </div>
+      <!-- /권장 사용법 블록 -->
+
     </div>
   </div>
 
