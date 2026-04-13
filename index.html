@@ -1577,56 +1577,62 @@
             </div>
           </div>
           <div class="card-body">
+
+            <!-- HTTP transport announcement -->
+            <div class="alert info" style="margin:0 0 14px 0;">
+              <div class="alert-icon">&#9889;</div>
+              <div class="alert-text">
+                <strong>HTTP 게이트웨이로 업그레이드</strong>
+                이제 <code>mcp-remote</code> 프록시가 필요 없습니다 &mdash; 사내 게이트웨이(<code>orbit-mcp-api.fnf.co.kr</code>)를 직접 호출.
+                <strong>Windows / Mac 동일 설정</strong>으로 작동합니다.
+              </div>
+            </div>
+
             <div class="os-tabs">
               <div class="os-tab active" data-os="win" onclick="switchOsTab('fnf-card','win')">Windows</div>
               <div class="os-tab" data-os="mac" onclick="switchOsTab('fnf-card','mac')">Mac</div>
             </div>
 
+            <!-- Windows -->
             <div class="os-content active" data-os="win">
               <p style="margin-top:12px; font-size:13px; color:var(--text-light);">
-                <strong>내 사용자명 확인:</strong>
+                <strong>.mcp.json에 추가</strong> &mdash; 한 줄로 끝:
               </p>
-              <div class="code-block">
-                <span class="cmd">echo</span> <span class="str">%USERNAME%</span><br>
-                <span class="comment"># → 예: AC1059</span>
-              </div>
-              <p style="font-size:13px; color:var(--text-light);">
-                <strong>.mcp.json에 추가:</strong>
+              <div class="code-block" style="white-space:pre-wrap; word-break:break-all;"><span class="key">"fnf-ai-studio"</span>: {
+  <span class="str">"type"</span>: <span class="str">"http"</span>,
+  <span class="str">"url"</span>: <span class="str">"https://orbit-mcp-api.fnf.co.kr/api/projects/1ce5d6bf-9209-49cc-a26c-4eda8d085fca/subscriptions/a22f2f9b-e331-4964-919b-9a88560251f5/mcp"</span>
+}</div>
+              <p style="margin-top:8px; font-size:12px; color:var(--text-light);">
+                &#10003; Node.js / npx / mcp-remote 패키지 <strong>불필요</strong> &nbsp;|&nbsp;
+                &#10003; 사용자명·로컬 IP 설정 <strong>불필요</strong> &nbsp;|&nbsp;
+                &#10003; 사내 인증 게이트웨이가 자동 처리
               </p>
-              <div class="code-block">
-                <span class="key">"fnf-studio"</span>: {<br>
-                &nbsp;&nbsp;<span class="str">"type"</span>: <span class="str">"stdio"</span>,<br>
-                &nbsp;&nbsp;<span class="str">"command"</span>: <span class="str">"npx"</span>,<br>
-                &nbsp;&nbsp;<span class="str">"args"</span>: [<span class="str">"mcp-remote"</span>, <span class="str">"http://서버IP:8001/sse"</span>, <span class="str">"--allow-http"</span>]<br>
-                }
-              </div>
             </div>
 
+            <!-- Mac -->
             <div class="os-content" data-os="mac">
               <p style="margin-top:12px; font-size:13px; color:var(--text-light);">
-                <strong>내 사용자명 확인:</strong>
+                <strong>.mcp.json에 추가</strong> &mdash; Windows와 <strong>완전히 동일</strong>:
               </p>
-              <div class="code-block">
-                <span class="cmd">whoami</span><br>
-                <span class="comment"># → 예: david</span>
-              </div>
-              <p style="font-size:13px; color:var(--text-light);">
-                <strong>.mcp.json에 추가:</strong>
+              <div class="code-block" style="white-space:pre-wrap; word-break:break-all;"><span class="key">"fnf-ai-studio"</span>: {
+  <span class="str">"type"</span>: <span class="str">"http"</span>,
+  <span class="str">"url"</span>: <span class="str">"https://orbit-mcp-api.fnf.co.kr/api/projects/1ce5d6bf-9209-49cc-a26c-4eda8d085fca/subscriptions/a22f2f9b-e331-4964-919b-9a88560251f5/mcp"</span>
+}</div>
+              <p style="margin-top:8px; font-size:12px; color:var(--text-light);">
+                &#10003; HTTP 방식이라 OS 독립적 &nbsp;|&nbsp;
+                &#10003; <code>whoami</code> 같은 사용자명 확인 단계 <strong>없음</strong> &nbsp;|&nbsp;
+                &#10003; 터미널 셸(zsh/bash) 차이도 무관
               </p>
-              <div class="code-block">
-                <span class="key">"fnf-studio"</span>: {<br>
-                &nbsp;&nbsp;<span class="str">"type"</span>: <span class="str">"stdio"</span>,<br>
-                &nbsp;&nbsp;<span class="str">"command"</span>: <span class="str">"npx"</span>,<br>
-                &nbsp;&nbsp;<span class="str">"args"</span>: [<span class="str">"mcp-remote"</span>, <span class="str">"http://서버IP:8001/sse"</span>, <span class="str">"--allow-http"</span>]<br>
-                }
-              </div>
             </div>
 
-            <p style="margin-top:12px; font-size:13px;"><strong>이미지 업로드:</strong></p>
-            <div class="code-block">
-              <span class="cmd">curl</span> -s -F <span class="str">'file=@사진.jpg'</span> http://서버IP:8001/upload<br>
-              <span class="comment"># → {"images":{"file":"img_a1b2c3d4"}}</span><br>
-              <span class="comment"># 반환된 img_xxx ID를 도구에 전달</span>
+            <!-- Why the change matters -->
+            <div class="tip-box" style="margin-top:14px; padding:14px 18px;">
+              <div class="tip-title" style="font-size:13px;">&#128279; 변경 포인트 &mdash; 클라이언트 프록시 &rarr; 서버 게이트웨이</div>
+              <p style="font-size:13px;">
+                <strong>이전:</strong> stdio + <code>mcp-remote</code> 프록시 + 로컬 IP &nbsp;&rarr;&nbsp;
+                <strong>지금:</strong> 순수 HTTP + 사내 게이트웨이 URL 한 줄.<br>
+                인증·라우팅·리트라이를 <strong>서버가 모두 처리</strong>하므로 클라이언트는 URL만 알면 됩니다.
+              </p>
             </div>
           </div>
         </div>
